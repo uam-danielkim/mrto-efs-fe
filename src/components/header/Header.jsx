@@ -50,10 +50,10 @@ function Header({ onOpenAmhsModal, onResetDemo }) {
 
       <div className="app-header__right">
         <button className="header-btn primary" onClick={onOpenAmhsModal}>
-          📡 AMHS 전문 시뮬레이터
+          AMHS 전문 시뮬레이터
         </button>
         <button className="header-btn" onClick={onResetDemo}>
-          🔄 초기화
+          초기화
         </button>
       </div>
     </header>
