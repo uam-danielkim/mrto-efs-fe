@@ -62,6 +62,16 @@ function FlightStripBay({ bay, statusTitle }) {
         }
     })();
 
+    const stripTitle = (() => {
+        switch (bay.operationType) {
+            case 'DEPARTURE': return '[출발 스트립] DEPARTURE';
+            case 'ARRIVAL': return '[도착 스트립] ARRIVAL';
+            case 'TRANSIT': return '[통과비행 스트립] TRANSIT';
+            case 'CIRCUIT': return '[장주비행 스트립] CIRCUIT';
+            default: return 'FLIGHT STRIP';
+        }
+    })();
+
     return (
         <article
             ref={bayRef}
@@ -72,64 +82,69 @@ function FlightStripBay({ bay, statusTitle }) {
                 event.dataTransfer.effectAllowed = 'move';
             }}
         >
+            <div className="flight-strip-bay__title-bar" style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 4px', fontSize: '8px', color: 'var(--text-muted)' }}>
+                <span style={{ fontWeight: 800 }}>{stripTitle}</span>
+                <span>{bay.status}</span>
+            </div>
+
             <div className="flight-strip-bay__grid">
                 <div className="flight-strip-bay__cell flight-strip-bay__cell--callsign">
-                    <span className="flight-strip-bay__label">ACID</span>
+                    <span className="flight-strip-bay__label">1 ACID</span>
                     <strong>{bay.callsign}</strong>
                 </div>
 
                 <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">TYPE</span>
-                    <strong>{bay.aircraftType}</strong>
+                    <span className="flight-strip-bay__label">2 REV</span>
+                    <strong>{bay.revisionNumber ?? '01'}</strong>
                 </div>
 
                 <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">WAKE</span>
-                    <strong>{bay.wakeCategory ?? '-'}</strong>
+                    <span className="flight-strip-bay__label">2A SEC</span>
+                    <strong>{bay.originator ?? 'D1'}</strong>
                 </div>
 
                 <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">CODE</span>
+                    <span className="flight-strip-bay__label">3 TYPE</span>
+                    <strong>{bay.aircraftType}/{bay.wakeCategory ?? 'M'}</strong>
+                </div>
+
+                <div className="flight-strip-bay__cell">
+                    <span className="flight-strip-bay__label">4 CID</span>
+                    <strong>{bay.cid ?? '042'}</strong>
+                </div>
+
+                <div className="flight-strip-bay__cell">
+                    <span className="flight-strip-bay__label">5 SSR</span>
                     <strong>{bay.beaconCode ?? '-'}</strong>
                 </div>
 
                 <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">DEP</span>
-                    <strong>{bay.departureAirport ?? '-'}</strong>
-                </div>
-
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">ARR</span>
-                    <strong>{bay.arrivalAirport ?? '-'}</strong>
-                </div>
-
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">ALT</span>
-                    <strong>{bay.altitude ?? bay.requestedAltitude ?? '-'}</strong>
-                </div>
-
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">RWY</span>
-                    <strong>{bay.runway ?? '-'}</strong>
-                </div>
-
-                <div className="flight-strip-bay__cell flight-strip-bay__cell--route">
-                    <span className="flight-strip-bay__label">ROUTE</span>
-                    <strong>{bay.route ?? '-'}</strong>
-                </div>
-
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">TIME</span>
+                    <span className="flight-strip-bay__label">6 TIME</span>
                     <strong>{bay.time ?? bay.etd ?? '-'}</strong>
                 </div>
 
                 <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">GATE</span>
-                    <strong>{bay.gate ?? '-'}</strong>
+                    <span className="flight-strip-bay__label">7 ALT</span>
+                    <strong>{bay.altitude ?? bay.requestedAltitude ?? '-'}</strong>
+                </div>
+
+                <div className="flight-strip-bay__cell">
+                    <span className="flight-strip-bay__label">8 DEP/ETA</span>
+                    <strong>{bay.departureAirport ?? bay.eta ?? '-'}</strong>
+                </div>
+
+                <div className="flight-strip-bay__cell">
+                    <span className="flight-strip-bay__label">9B GATE</span>
+                    <strong>{bay.gate ?? bay.runway ?? '-'}</strong>
+                </div>
+
+                <div className="flight-strip-bay__cell flight-strip-bay__cell--route">
+                    <span className="flight-strip-bay__label">9 ROUTE</span>
+                    <strong>{bay.route ?? '-'}</strong>
                 </div>
 
                 <div className="flight-strip-bay__cell flight-strip-bay__cell--remarks">
-                    <span className="flight-strip-bay__label">RMK</span>
+                    <span className="flight-strip-bay__label">9A PO/RMK</span>
                     <strong>{bay.remarks ?? statusTitle ?? bay.status}</strong>
                 </div>
             </div>
