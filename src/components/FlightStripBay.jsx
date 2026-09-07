@@ -72,80 +72,113 @@ function FlightStripBay({ bay, statusTitle }) {
         }
     })();
 
+    // Authentic paper colors based on stitch_
+    const paperColorStyle = (() => {
+        switch (bay.operationType) {
+            case 'DEPARTURE': return { background: '#dcfce7', color: '#064e3b' };
+            case 'ARRIVAL': return { background: '#fef08a', color: '#713f12' };
+            case 'TRANSIT': return { background: '#ffffff', color: '#111827' };
+            case 'CIRCUIT': return { background: '#f3e8ff', color: '#581c87' };
+            default: return { background: '#ffffff', color: '#111827' };
+        }
+    })();
+
     return (
         <article
             ref={bayRef}
             className={`flight-strip-bay ${typeClass} ${isCompact ? 'flight-strip-bay--compact' : ''}`}
+            style={{ ...paperColorStyle, padding: '2px', borderRadius: '4px', border: '1px solid #4b5563' }}
             draggable
             onDragStart={(event) => {
                 event.dataTransfer.setData('bayId', bay.id);
                 event.dataTransfer.effectAllowed = 'move';
             }}
         >
-            <div className="flight-strip-bay__title-bar" style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 4px', fontSize: '8px', color: 'var(--text-muted)' }}>
-                <span style={{ fontWeight: 800 }}>{stripTitle}</span>
-                <span>{bay.status}</span>
-            </div>
-
-            <div className="flight-strip-bay__grid">
-                <div className="flight-strip-bay__cell flight-strip-bay__cell--callsign">
-                    <span className="flight-strip-bay__label">1 ACID</span>
-                    <strong>{bay.callsign}</strong>
+            <div className="flight-strip-bay__grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 1.5fr 1.5fr 1.5fr', gridTemplateRows: 'repeat(4, 22px)', gap: '1px', background: '#4b5563' }}>
+                {/* Row 1 */}
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '1 / 2', gridRow: '1 / 2', fontWeight: 800, fontSize: '13px' }}>
+                    {bay.callsign}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '2 / 3', gridRow: '1 / 2', fontWeight: 700 }}>
+                    {bay.beaconCode ?? bay.ssrCode ?? '1200'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '3 / 4', gridRow: '1 / 2', fontWeight: 800 }}>
+                    {bay.departureAirport ?? 'RKSI'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '4 / 5', gridRow: '1 / 2' }}>
+                    {bay.time ?? bay.etd ?? '0000'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '5 / 7', gridRow: '1 / 2', fontWeight: 700 }}>
+                    {bay.aircraftType ?? 'B738'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '7 / 8', gridRow: '1 / 2' }}>
+                    {bay.altitude ?? 'FL340'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '8 / 9', gridRow: '1 / 2' }}>
+                    {bay.route?.slice(0, 10) ?? 'DCT'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '9 / 10', gridRow: '1 / 2', fontWeight: 700 }}>
+                    {bay.atd ? `ATD ${bay.atd}` : (bay.etd ? `ETD ${bay.etd}` : '-')}
                 </div>
 
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">2 REV</span>
-                    <strong>{bay.revisionNumber ?? '01'}</strong>
+                {/* Row 2 */}
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '1 / 2', gridRow: '2 / 3' }}>
+                    {bay.aircraftType}/{bay.wakeCategory ?? 'M'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '2 / 3', gridRow: '2 / 3', fontWeight: 700 }}>
+                    {bay.runway ?? '33L'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '3 / 4', gridRow: '2 / 3' }}>
+                    {bay.etd ?? bay.time ?? '-'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '4 / 6', gridRow: '2 / 3' }}>
+                    {bay.sidStar ?? bay.route?.slice(0, 12) ?? '-'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '6 / 7', gridRow: '2 / 3', fontWeight: 800 }}>
+                    {bay.flightRules ?? 'I'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '7 / 8', gridRow: '2 / 3' }}>
+                    {bay.departureAirport ?? 'RKSI'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '8 / 9', gridRow: '2 / 3' }}>
+                    {bay.arrivalAirport ?? 'RKSS'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '9 / 10', gridRow: '2 / 3' }}>
+                    {bay.assignedAltitude ?? bay.altitude ?? '-'}
                 </div>
 
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">2A SEC</span>
-                    <strong>{bay.originator ?? 'D1'}</strong>
+                {/* Row 3 */}
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '1 / 6', gridRow: '3 / 4', fontWeight: 700 }}>
+                    {bay.callsign}/{bay.departureAirport ?? 'RKSI'}-{bay.arrivalAirport ?? 'RKSS'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '6 / 7', gridRow: '3 / 4', fontWeight: 700 }}>
+                    TCA
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '7 / 8', gridRow: '3 / 4' }}>
+                    SQ {bay.beaconCode ?? '1200'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '8 / 9', gridRow: '3 / 4' }}>
+                    {bay.speed ?? 'M084'}
+                </div>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '9 / 10', gridRow: '3 / 4', fontWeight: 700 }}>
+                    {bay.status ?? 'FPL'}
                 </div>
 
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">3 TYPE</span>
-                    <strong>{bay.aircraftType}/{bay.wakeCategory ?? 'M'}</strong>
+                {/* Row 4 */}
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '1 / 2', gridRow: '4 / 5' }}>
+                    {bay.cid ?? '001'}
                 </div>
-
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">4 CID</span>
-                    <strong>{bay.cid ?? '042'}</strong>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '2 / 3', gridRow: '4 / 5', fontWeight: 800 }}>
+                    C
                 </div>
-
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">5 SSR</span>
-                    <strong>{bay.beaconCode ?? '-'}</strong>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '3 / 4', gridRow: '4 / 5' }}>
+                    {bay.gate ?? '-'}
                 </div>
-
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">6 TIME</span>
-                    <strong>{bay.time ?? bay.etd ?? '-'}</strong>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '4 / 6', gridRow: '4 / 5', fontWeight: 700 }}>
+                    {bay.operationType?.slice(0, 3) ?? 'DEP'}
                 </div>
-
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">7 ALT</span>
-                    <strong>{bay.altitude ?? bay.requestedAltitude ?? '-'}</strong>
-                </div>
-
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">8 DEP/ETA</span>
-                    <strong>{bay.departureAirport ?? bay.eta ?? '-'}</strong>
-                </div>
-
-                <div className="flight-strip-bay__cell">
-                    <span className="flight-strip-bay__label">9B GATE</span>
-                    <strong>{bay.gate ?? bay.runway ?? '-'}</strong>
-                </div>
-
-                <div className="flight-strip-bay__cell flight-strip-bay__cell--route">
-                    <span className="flight-strip-bay__label">9 ROUTE</span>
-                    <strong>{bay.route ?? '-'}</strong>
-                </div>
-
-                <div className="flight-strip-bay__cell flight-strip-bay__cell--remarks">
-                    <span className="flight-strip-bay__label">9A PO/RMK</span>
-                    <strong>{bay.remarks ?? statusTitle ?? bay.status}</strong>
+                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '6 / 10', gridRow: '4 / 5', opacity: 0.85 }}>
+                    {bay.remarks ?? 'RMK/ TCAS EQUIPPED'}
                 </div>
             </div>
         </article>
