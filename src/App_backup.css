@@ -1,0 +1,598 @@
+/* ========= 공통 / 기존 영역 ========= */
+
+.counter {
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+    margin-bottom: 24px;
+}
+
+.counter:hover {
+    border-color: var(--accent-border);
+}
+
+.counter:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.hero {
+    position: relative;
+}
+
+.hero .base,
+.hero .framework,
+.hero .vite {
+    inset-inline: 0;
+    margin: 0 auto;
+}
+
+.hero .base {
+    width: 170px;
+    position: relative;
+    z-index: 0;
+}
+
+.hero .framework,
+.hero .vite {
+    position: absolute;
+}
+
+.hero .framework {
+    z-index: 1;
+    top: 34px;
+    height: 28px;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg) scale(1.4);
+}
+
+.hero .vite {
+    z-index: 0;
+    top: 107px;
+    height: 26px;
+    width: auto;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg) scale(0.8);
+}
+
+#center {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    place-content: center;
+    place-items: center;
+    flex-grow: 1;
+}
+
+@media (max-width: 1024px) {
+    #center {
+        padding: 32px 20px 24px;
+        gap: 18px;
+    }
+}
+
+#next-steps {
+    display: flex;
+    border-top: 1px solid var(--border);
+    text-align: left;
+}
+
+#next-steps > div {
+    flex: 1 1 0;
+    padding: 32px;
+}
+
+#next-steps .icon {
+    margin-bottom: 16px;
+    width: 22px;
+    height: 22px;
+}
+
+@media (max-width: 1024px) {
+    #next-steps {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #next-steps > div {
+        padding: 24px 20px;
+    }
+}
+
+#docs {
+    border-right: 1px solid var(--border);
+}
+
+@media (max-width: 1024px) {
+    #docs {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+}
+
+#next-steps ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 8px;
+    margin: 32px 0 0;
+}
+
+#next-steps ul .logo {
+    height: 18px;
+}
+
+#next-steps ul a {
+    color: var(--text-h);
+    font-size: 16px;
+    border-radius: 6px;
+    background: var(--social-bg);
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: box-shadow 0.3s;
+}
+
+#next-steps ul a:hover {
+    box-shadow: var(--shadow);
+}
+
+#next-steps ul a .button-icon {
+    height: 18px;
+    width: 18px;
+}
+
+@media (max-width: 1024px) {
+    #next-steps ul {
+        margin-top: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #next-steps ul li {
+        flex: 1 1 calc(50% - 8px);
+    }
+
+    #next-steps ul a {
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+}
+
+#spacer {
+    height: 88px;
+    border-top: 1px solid var(--border);
+}
+
+@media (max-width: 1024px) {
+    #spacer {
+        height: 48px;
+    }
+}
+
+.ticks {
+    position: relative;
+    width: 100%;
+}
+
+.ticks::before,
+.ticks::after {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    border: 5px solid transparent;
+}
+
+.ticks::before {
+    left: 0;
+    border-left-color: var(--border);
+}
+
+.ticks::after {
+    right: 0;
+    border-right-color: var(--border);
+}
+
+/* ========= EFS 스타일 ========= */
+
+.status-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 32px;
+    padding: 2px 6px;
+    border: 1px solid #7c7c7c;
+    border-bottom-color: #4b4b4b;
+    background: linear-gradient(#eeeeee, #cfcfcf);
+    color: #111111;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.2px;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.status-field--active {
+    background: linear-gradient(#fff7cc, #e2c85d);
+}
+
+.status-field__left,
+.status-field__right {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.status-field__mode {
+    padding: 1px 4px;
+    border: 1px solid #9a9a9a;
+    background: #f6f6f6;
+    color: #222222;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.status-field__title {
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.status-field__count {
+    min-width: 16px;
+    padding: 1px 4px;
+    border: 1px solid #9a9a9a;
+    background: #f5f5f5;
+    text-align: center;
+    font-size: 10px;
+}
+
+.status-field__warning {
+    padding: 1px 5px;
+    border: 1px solid #b68b00;
+    background: #ffd84d;
+    color: #3b2a00;
+    font-size: 9px;
+}
+
+.efs-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 100vh;
+    padding: 40px;
+    background: #4b4b4b;
+    box-sizing: border-box;
+}
+
+.efs-display {
+    width: 100vw;
+    height: 100vh;
+    /*padding: 8px;*/
+    background: #4a4a4a;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* ========= 보드 레이아웃 ========= */
+
+.flight-strip-board {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+    align-items: start;
+    position: relative;
+    background-color: #151824;
+}
+
+.flight-strip-board::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 240px;
+    height: 8px;
+    background: #f6d36b;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* 컬럼 전체를 세로 flex 컨테이너로 */
+.flight-strip-board__column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+}
+/* 위쪽 영역: QUEUE 위 영역만 차지 */
+.flight-strip-board__column-top {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-height: 0;
+    gap: 8px;
+    overflow: hidden;
+}
+
+/* 아래쪽 영역: QUEUE 고정 */
+.flight-strip-board__column-bottom {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 240px;
+    min-height: 240px;
+    gap: 8px;
+    border-top: 1px solid #444;
+    overflow-y: auto;
+    background: #5a5a5a;
+}
+
+/* 위쪽 필드가 서로 공간을 나눠 가지도록 */
+.flight-strip-status-section__header-with-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.field-reorder-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.field-reorder-buttons button {
+    font-size: 10px;
+    padding: 0 4px;
+    border: 1px solid #666;
+    background: #333;
+    color: #eee;
+    cursor: pointer;
+}
+
+.field-reorder-buttons button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.flight-strip-status-section {
+    display: flex;
+    flex-direction: column;
+    min-height: 26px;
+    border: 1px solid #2f2f2f;
+    background: #5a5a5a;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+.flight-strip-status-section--flex {
+    flex: 1 1 0;
+    min-height: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.flight-strip-status-section__resize-handle {
+    height: 7px;
+    flex: 0 0 7px;
+    cursor: row-resize;
+    background: rgba(246, 211, 107, 0.35);
+}
+
+.flight-strip-status-section__resize-handle:hover {
+    background: rgba(246, 211, 107, 0.8);
+}
+
+/* 아래 큐 필드 */
+.flight-strip-status-section--queue {
+    flex: 0 0 auto;
+}
+
+/* 섹션 바디 */
+.flight-strip-status-section__body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 4px;
+    flex: 1 1 auto;
+    overflow-y: auto; /* 많아지면 내부 스크롤 */
+}
+
+/* ========= 스트립(카드) ========= */
+
+.flight-strip-bay {
+    min-height: 54px;
+    padding: 3px;
+    border: 1px solid #b8b0a1;
+    background: #eee8dc;
+    color: #1f1f1f;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    line-height: 1.1;
+    box-sizing: border-box;
+    cursor: grab;
+}
+
+/* 출발 스트립 */
+.flight-strip-bay--departure {
+    border-color: #3b6ea8;
+    background: #e0ecff;
+}
+
+/* 도착 스트립 */
+.flight-strip-bay--arrival {
+    border-color: #2f7b4f;
+    background: #e0f6e8;
+}
+
+/* TRANSIT 스트립 */
+.flight-strip-bay--transit {
+    border-color: #6a4fb0;
+    background: #ebe4ff;
+}
+
+/* TRAFFIC PATTERN(CIRCUIT) 스트립 */
+.flight-strip-bay--circuit {
+    border-color: #b86a2b;
+    background: #ffe9d8;
+}
+
+.flight-strip-bay:active {
+    cursor: grabbing;
+    opacity: 0.75;
+}
+
+.flight-strip-bay__top,
+.flight-strip-bay__middle,
+.flight-strip-bay__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.flight-strip-bay__top {
+    margin-bottom: 4px;
+}
+
+.flight-strip-bay__callsign {
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.flight-strip-bay__aircraft {
+    color: #333333;
+}
+
+.flight-strip-bay__runway {
+    padding: 1px 4px;
+    background: #f6d36b;
+    color: #7a2d00;
+    font-weight: 700;
+}
+
+.flight-strip-bay__middle {
+    color: #333333;
+}
+
+.flight-strip-bay__bottom {
+    margin-top: 4px;
+    justify-content: flex-end;
+}
+
+.flight-strip-bay__status {
+    padding: 2px 5px;
+    border: 1px solid #a0a0a0;
+    background: #f5f5f5;
+    font-weight: 700;
+}
+
+.flight-strip-bay__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr 0.5fr 0.8fr;
+    border-top: 1px solid #777;
+    border-left: 1px solid #777;
+}
+
+.flight-strip-bay__cell {
+    min-height: 22px;
+    padding: 2px 3px;
+    border-right: 1px solid #777;
+    border-bottom: 1px solid #777;
+    background: rgba(255, 255, 255, 0.35);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.flight-strip-bay__cell--callsign {
+    font-size: 12px;
+}
+
+.flight-strip-bay__cell--route,
+.flight-strip-bay__cell--remarks {
+    grid-column: span 2;
+}
+
+.flight-strip-bay__label {
+    display: block;
+    margin-bottom: 1px;
+    color: #555;
+    font-size: 7px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.flight-strip-bay__cell strong {
+    display: block;
+    color: #111;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+.flight-strip-board__column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* 위쪽 영역: QUEUE 위 공간만 사용 */
+.flight-strip-board__column-top {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-height: 0;
+    gap: 8px;
+    overflow: hidden;
+}
+
+/* 아래쪽 영역: QUEUE 고정 */
+.flight-strip-board__column-bottom {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 240px;
+    min-height: 240px;
+    gap: 8px;
+    border-top: 1px solid #444;
+    overflow-y: auto;
+    background: #5a5a5a;
+}
+
+/* 컬럼 상단 대표 상태 헤더 */
+.flight-strip-board__column-header {
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    border: 1px solid #2f2f2f;
+    background: linear-gradient(#3f3f3f, #262626);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    color: #f5f5f5;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 큰 타이틀: DEPARTURE / ARRIVAL / TRANSIT / TRAFFIC PATTERN */
+.column-header__title {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}

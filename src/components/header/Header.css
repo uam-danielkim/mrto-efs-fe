@@ -1,0 +1,140 @@
+:root {
+  --bg: #111317;
+  --bg-dim: #16181f;
+  --surface-container: #15171e;
+  --surface-high: #1c1f28;
+  --surface-hover: #262a36;
+  --surface-active: #233458;
+  --outline: #262a36;
+  --outline-light: #3e4454;
+  --primary: #57a8ff;
+  --primary-bright: #f1f3f8;
+  --primary-soft: #8a91a3;
+  --green: #00ba96;
+  --amber: #fbcb41;
+  --red: #ff3b56;
+}
+
+.app-header {
+  height: 52px;
+  background: var(--bg-dim);
+  border-bottom: 1px solid var(--outline);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.app-header__left,
+.app-header__center,
+.app-header__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-badge {
+  background: #141724;
+  border: 1px solid var(--outline);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brand-badge .sub-tag {
+  background: var(--primary);
+  color: #0b111e;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.brand-sub {
+  color: var(--primary-bright);
+}
+
+.system-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #141724;
+  border: 1px solid var(--outline);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--primary-soft);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { box-shadow: 0 0 0 0 rgba(0, 186, 150, 0.7); }
+  70% { box-shadow: 0 0 0 6px rgba(0, 186, 150, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 186, 150, 0); }
+}
+
+.clock-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary-bright);
+  background: #0d0f14;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--outline);
+}
+
+.airport-select {
+  background: var(--surface-high);
+  border: 1px solid var(--outline);
+  color: var(--primary-bright);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+}
+
+.header-btn {
+  background: var(--surface-high);
+  border: 1px solid var(--outline-light);
+  color: var(--primary-bright);
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.header-btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.header-btn.primary {
+  background: #183359;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.header-btn.primary:hover {
+  background: #23467a;
+}
