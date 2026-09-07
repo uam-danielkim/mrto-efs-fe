@@ -87,98 +87,105 @@ function FlightStripBay({ bay, statusTitle }) {
         <article
             ref={bayRef}
             className={`flight-strip-bay ${typeClass} ${isCompact ? 'flight-strip-bay--compact' : ''}`}
-            style={{ ...paperColorStyle, padding: '2px', borderRadius: '4px', border: '1px solid #4b5563' }}
+            style={{ ...paperColorStyle, padding: '0', borderRadius: '3px', border: '1px solid #334155', overflow: 'hidden', height: isCompact ? '48px' : '56px', display: 'flex', flexDirection: 'row' }}
             draggable
             onDragStart={(event) => {
                 event.dataTransfer.setData('bayId', bay.id);
                 event.dataTransfer.effectAllowed = 'move';
             }}
         >
-            <div className="flight-strip-bay__grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 1.5fr 1.5fr 1.5fr', gridTemplateRows: 'repeat(4, 22px)', gap: '1px', background: '#4b5563' }}>
-                {/* Row 1 */}
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '1 / 2', gridRow: '1 / 2', fontWeight: 800, fontSize: '13px' }}>
+            {/* Section 1: Left 1/4 division (4 rows: 1, 2+2A, 3, 4) */}
+            <div style={{ flex: '2.1', display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(0,0,0,0.35)', minWidth: 0 }}>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 3px', borderBottom: '1px solid rgba(0,0,0,0.2)', fontWeight: 800, fontSize: '11px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                     {bay.callsign}
                 </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '2 / 3', gridRow: '1 / 2', fontWeight: 700 }}>
+                <div style={{ flex: 1, display: 'flex', borderBottom: '1px solid rgba(0,0,0,0.2)', minWidth: 0 }}>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 2px', borderRight: '1px solid rgba(0,0,0,0.2)', fontSize: '8px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                        {bay.aircraftType}/{bay.wakeCategory ?? 'M'}
+                    </div>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 2px', fontWeight: 800, fontSize: '8px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                        {bay.runway ?? '33L'}
+                    </div>
+                </div>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 3px', borderBottom: '1px solid rgba(0,0,0,0.2)', fontSize: '8px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                    {bay.callsign}/{bay.departureAirport ?? 'RKSI'}-{bay.arrivalAirport ?? 'RKSS'}
+                </div>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 3px', fontSize: '8px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                    {bay.cid ?? '001'}
+                </div>
+            </div>
+
+            {/* Section 2: 1/3 division (3 rows: 5, 6, 7) */}
+            <div style={{ flex: '0.9', display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(0,0,0,0.35)', minWidth: 0 }}>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid rgba(0,0,0,0.2)', fontWeight: 700, fontSize: '8.5px' }}>
                     {bay.beaconCode ?? bay.ssrCode ?? '1200'}
                 </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '3 / 4', gridRow: '1 / 2', fontWeight: 800 }}>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid rgba(0,0,0,0.2)', fontSize: '8.5px' }}>
+                    {bay.etd ?? bay.time ?? '-'}
+                </div>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '8.5px' }}>
+                    C
+                </div>
+            </div>
+
+            {/* Section 3: 1/3 division (3 rows: 8, 8A, 8B) */}
+            <div style={{ flex: '1.1', display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(0,0,0,0.35)', minWidth: 0 }}>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid rgba(0,0,0,0.2)', fontWeight: 800, fontSize: '8.5px' }}>
                     {bay.departureAirport ?? 'RKSI'}
                 </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '4 / 5', gridRow: '1 / 2' }}>
-                    {bay.time ?? bay.etd ?? '0000'}
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid rgba(0,0,0,0.2)', fontSize: '8px' }}>
+                    {bay.sidStar ?? bay.route?.slice(0, 8) ?? '-'}
                 </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '5 / 7', gridRow: '1 / 2', fontWeight: 700 }}>
-                    {bay.aircraftType ?? 'B738'}
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px' }}>
+                    {bay.gate ?? '-'}
                 </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '7 / 8', gridRow: '1 / 2' }}>
+            </div>
+
+            {/* Section 4: Center Wide (4 corners: 9, 9B, 9A, 9C + route) */}
+            <div style={{ flex: '3.2', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '1px 3px', borderRight: '1px solid rgba(0,0,0,0.35)', minWidth: 0 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '8px', fontWeight: 700 }}>
+                    <span>{bay.time ?? bay.etd ?? '0000'}</span>
+                    <span>{bay.aircraftType ?? 'B738'}</span>
+                </div>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8.5px', fontWeight: 700, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                    {bay.route ?? 'NOPS1A NOPSI Y697 LANAT'}
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '8px' }}>
+                    <span style={{ fontWeight: 700 }}>{bay.operationType?.slice(0, 3) ?? 'DEP'}</span>
+                    <span style={{ opacity: 0.85, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{bay.remarks ?? 'RMK/ TCAS'}</span>
+                </div>
+            </div>
+
+            {/* Section 5: Right 3x3 Grid (3 cols x 3 rows: 10,11,12 / 13,14,15 / 16,17,18) */}
+            <div style={{ flex: '2.7', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'repeat(3, 1fr)', gap: '1px', background: 'rgba(0,0,0,0.25)', minWidth: 0 }}>
+                <div style={{ background: paperColorStyle.background, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px', fontWeight: 800 }}>
                     {bay.altitude ?? 'FL340'}
                 </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '8 / 9', gridRow: '1 / 2' }}>
-                    {bay.route?.slice(0, 10) ?? 'DCT'}
+                <div style={{ background: paperColorStyle.background, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px' }}>
+                    {(bay.route || '').split(' ')[0] || 'DCT'}
                 </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '9 / 10', gridRow: '1 / 2', fontWeight: 700 }}>
+                <div style={{ background: paperColorStyle.background, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px' }}>
                     {bay.atd ? `ATD ${bay.atd}` : (bay.etd ? `ETD ${bay.etd}` : '-')}
                 </div>
 
-                {/* Row 2 */}
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '1 / 2', gridRow: '2 / 3' }}>
-                    {bay.aircraftType}/{bay.wakeCategory ?? 'M'}
-                </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '2 / 3', gridRow: '2 / 3', fontWeight: 700 }}>
-                    {bay.runway ?? '33L'}
-                </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '3 / 4', gridRow: '2 / 3' }}>
-                    {bay.etd ?? bay.time ?? '-'}
-                </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '4 / 6', gridRow: '2 / 3' }}>
-                    {bay.sidStar ?? bay.route?.slice(0, 12) ?? '-'}
-                </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '6 / 7', gridRow: '2 / 3', fontWeight: 800 }}>
-                    {bay.flightRules ?? 'I'}
-                </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '7 / 8', gridRow: '2 / 3' }}>
+                <div style={{ background: paperColorStyle.background, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px' }}>
                     {bay.departureAirport ?? 'RKSI'}
                 </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '8 / 9', gridRow: '2 / 3' }}>
+                <div style={{ background: paperColorStyle.background, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px', fontWeight: 800 }}>
                     {bay.arrivalAirport ?? 'RKSS'}
                 </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '9 / 10', gridRow: '2 / 3' }}>
+                <div style={{ background: paperColorStyle.background, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px' }}>
                     {bay.assignedAltitude ?? bay.altitude ?? '-'}
                 </div>
 
-                {/* Row 3 */}
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '1 / 6', gridRow: '3 / 4', fontWeight: 700 }}>
-                    {bay.callsign}/{bay.departureAirport ?? 'RKSI'}-{bay.arrivalAirport ?? 'RKSS'}
+                <div style={{ background: paperColorStyle.background, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px' }}>
+                    {bay.beaconCode ?? '1200'}
                 </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '6 / 7', gridRow: '3 / 4', fontWeight: 700 }}>
-                    TCA
-                </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '7 / 8', gridRow: '3 / 4' }}>
-                    SQ {bay.beaconCode ?? '1200'}
-                </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '8 / 9', gridRow: '3 / 4' }}>
+                <div style={{ background: paperColorStyle.background, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px' }}>
                     {bay.speed ?? 'M084'}
                 </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '9 / 10', gridRow: '3 / 4', fontWeight: 700 }}>
-                    {bay.status ?? 'FPL'}
-                </div>
-
-                {/* Row 4 */}
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '1 / 2', gridRow: '4 / 5' }}>
-                    {bay.cid ?? '001'}
-                </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '2 / 3', gridRow: '4 / 5', fontWeight: 800 }}>
-                    C
-                </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '3 / 4', gridRow: '4 / 5' }}>
-                    {bay.gate ?? '-'}
-                </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '4 / 6', gridRow: '4 / 5', fontWeight: 700 }}>
-                    {bay.operationType?.slice(0, 3) ?? 'DEP'}
-                </div>
-                <div className="flight-strip-bay__cell" style={{ background: paperColorStyle.background, gridColumn: '6 / 10', gridRow: '4 / 5', opacity: 0.85 }}>
-                    {bay.remarks ?? 'RMK/ TCAS EQUIPPED'}
+                <div style={{ background: paperColorStyle.background, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px', fontWeight: 800 }}>
+                    {bay.status ?? 'ACT'}
                 </div>
             </div>
         </article>
