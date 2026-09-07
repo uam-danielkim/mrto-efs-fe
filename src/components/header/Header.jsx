@@ -22,13 +22,14 @@ function Header({ onOpenAmhsModal, onResetDemo }) {
     <header className="app-header">
       <div className="app-header__left">
         <div className="brand-badge">
+          <svg className="ke-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: 22, height: 22, verticalAlign: 'middle', marginRight: 6 }}>
+            <circle cx="16" cy="16" r="14" stroke="#0064d2" strokeWidth="2.5"/>
+            <path d="M7 16 C10 10, 22 10, 25 16 C22 22, 10 22, 7 16 Z" fill="#c8102e"/>
+            <path d="M16 6 C16 11, 24 13, 25 16 C22 13, 16 13, 16 6 Z" fill="#0064d2"/>
+          </svg>
           <span className="brand-main">ACROSS UAO</span>
           <span className="sub-tag">EFS</span>
           <span className="brand-sub">전자비행스트립</span>
-        </div>
-        <div className="system-pill">
-          <span className="pulse-dot"></span>
-          <span>AMHS / SIS ONLINE</span>
         </div>
       </div>
 
@@ -49,12 +50,10 @@ function Header({ onOpenAmhsModal, onResetDemo }) {
       </div>
 
       <div className="app-header__right">
-        <button className="header-btn primary" onClick={onOpenAmhsModal}>
-          AMHS 전문 시뮬레이터
-        </button>
-        <button className="header-btn" onClick={onResetDemo}>
-          초기화
-        </button>
+        <div className="system-pill">
+          <span className="pulse-dot"></span>
+          <span>AMHS / SIS ONLINE</span>
+        </div>
       </div>
     </header>
   )
