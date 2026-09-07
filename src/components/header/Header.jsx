@@ -22,10 +22,7 @@ function Header({ onOpenAmhsModal, onResetDemo }) {
     <header className="app-header">
       <div className="app-header__left">
         <div className="brand-badge">
-          <svg className="ke-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: 22, height: 22, verticalAlign: 'middle', marginRight: 6 }}>
-            <circle cx="16" cy="16" r="14" stroke="#0064d2" strokeWidth="2.5"/>
-            <path d="M7 16 C10 10, 22 10, 25 16 C22 22, 10 22, 7 16 Z" fill="#c8102e"/>
-          </svg>
+          <img className="ke-logo" src="/assets/logos/KE_primary-logo_white_online.svg" alt="Korean Air" style={{ height: 18, width: 'auto', objectFit: 'contain', verticalAlign: 'middle', marginRight: 6 }} />
           <span className="brand-main">전자비행스트립</span>
           <span className="sub-tag">EFS</span>
         </div>
