@@ -50,7 +50,7 @@ function Header({ onOpenAmhsModal, onResetDemo }) {
       <div className="app-header__right">
         <div className="system-pill">
           <span className="pulse-dot"></span>
-          <span>AMHS / SIS ONLINE</span>
+          <span>AMHS</span>
         </div>
       </div>
     </header>
